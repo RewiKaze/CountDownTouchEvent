@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            transition: all .3s;
+        }
+        .main-content {
+            margin: auto;
+            padding-top: 50vh;
+        }
+
+        #content {
+            font-size: 50px;
+            text-align: center;
+        }
+
+        .btn {
+            margin: auto;
+            border: black 2px solid;
+            font-size: 25px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            color: white;
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-content" id='content' style='max-width: 500px;'>
+        <div id='timer' ontouchstart="checkStart(event)" ontouchmove="checkEnd(event)">0 s</div>
+    </div><br>
+    <div class='btn' id='btn' onclick='start()'>Count</div>
+    <script>
+        var startX, endX, startY, endY;
+        var num = 0;
+        var x = document.getElementsByClassName("mySlides");
+        function checkStart(ev) {
+            startX = ev.touches[0].clientX;
+            startY = ev.touches[0].clientY;
+        }
+        function checkEnd(ev) {
+            endX = ev.touches[0].clientX;
+            endY = ev.touches[0].clientY;
+
+            if (startY - endY > 0) {
+                console.log('up');
+                num += 1;
+                document.getElementById('timer').innerHTML = num + ' s';
+
+            } else {
+                console.log('down')
+                if (num == 0) {
+                    num = 0;
+                } else {
+                    num -= 1;
+                }
+                document.getElementById('timer').innerHTML = num + ' s';
+
+            }
+
+        }
+        function start() {
+            content.innerHTML = '<div id=`` ontouchstart="" ontouchmove="">' + num + " s </div>";
+            if (num != 0) {
+                document.getElementById('btn').style.display = 'none';
+                var timer = setInterval(function () {
+                    num -= 1;
+                    content.innerHTML = '<div id=`timer` ontouchstart="" ontouchmove="">' + num + " s </div>";
+                    if (num == 0) {
+                        clearInterval(timer);
+                        document.getElementById('btn').style.display = 'block';
+                        document.body.style.background = 'red';
+                        setTimeout(function(){
+                            document.body.style.background = "white";
+                        },500)
+                        content.innerHTML = '<div id="'+'timer"'+'ontouchstart="checkStart(event)" ontouchmove="checkEnd(event)">' + "0 s</div>";
+                    }
+                }, 1000);
+            } else {
+                alert('You have to set time first!!');
+            }
+        }   
+    </script>
+</body>
+
+</html>
